@@ -66,7 +66,7 @@ setLegend(
 );
 
 // create game levels
-let level = 0; // this tracks the level we are on
+let level = 0;
 const levels = [
   map`
 ...............
@@ -239,24 +239,20 @@ const updatePhysics = async () => {
   if (isJumping && !getAll(block).some(block =>
     block.x === playerSprite.x && block.y === playerSprite.y - 1
   )) {
-    playerSprite.y -= jumpVelocity; // Muovi il giocatore verso l'alto
-    jumpVelocity -= gravity; // Riduci la velocità del salto
-
-    // Se la velocità del salto è scesa a zero o meno, termina il salto
+    playerSprite.y -= jumpVelocity;
+    jumpVelocity -= gravity;
+    
     if (jumpVelocity <= 0) {
       isJumping = false;
-      jumpVelocity = 0; // Azzera la velocità del salto
+      jumpVelocity = 0;
     }
   } else {
-    // Se il giocatore non è a terra, applica la gravità
     if (!isOnGround()) {
       playerSprite.y += gravity;
     }
   }
 
-  // Controlla se il giocatore è a terra
   if (isOnGround()) {
-    // Azzeramento della velocità del salto
     jumpVelocity = 0;
     isJumping = false;
   }
@@ -297,7 +293,7 @@ const checkGoal = () => {
 const gameLoop = async () => {
   while (true) {
     await updatePhysics();
-    if (isOnGround()) {  // Assicura che il giocatore possa saltare dopo essere atterrato
+    if (isOnGround()) {
       isJumping = false;
       jumpVelocity = 0;
     }
@@ -306,8 +302,6 @@ const gameLoop = async () => {
   }
 };
 
-
-// Avvia il ciclo di gioco
 gameLoop();
 
 afterInput(() => {
